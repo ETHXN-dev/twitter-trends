@@ -244,6 +244,19 @@ def find_centroid(polygon):
     (1.0, 2.0, 0.0)
     """
     "*** YOUR CODE HERE ***"
+    x = [latitude(p) for p in polygon]
+    y = [longitude(p) for p in polygon]
+
+    cross = [(x[i] * y[i + 1]) - (x[i + 1] * y[i]) for i in range(len(polygon) - 1)]
+    area = sum(cross) / 2
+
+    if area == 0:
+        return (x[0], y[0], area)
+
+    Cx = sum(((x[i] + x[i + 1]) * cross[i]) for i in range(len(cross))) / (6 * area)
+    Cy = sum(((y[i] + y[i + 1]) * cross[i]) for i in range(len(cross))) / (6 * area)
+
+    return (Cx, Cy, abs(area))
 
 
 def find_state_center(polygons):
