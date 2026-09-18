@@ -319,6 +319,17 @@ def group_tweets_by_state(tweets):
     """
     tweets_by_state = {}
     "*** YOUR CODE HERE ***"
+    state_centers = {
+        state: find_state_center(shape) for state, shape in us_states.items()
+    }
+
+    for tweet in tweets:
+        closest_state = min(
+            state_centers,
+            key=lambda state: geo_distance(state_centers[state], tweet_location(tweet)),
+        )
+        tweets_by_state.setdefault(closest_state, []).append(tweet)
+
     return tweets_by_state
 
 
